@@ -1104,3 +1104,72 @@ section {
     padding-right: 20px 15px;
   }
 }
+/* Start Skills Style*/
+.cards {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  margin: auto;
+  width: 100%;
+  max-width: 1200px;
+  grid-gap: 16px; /* Reduced gap for smaller squares */
+  padding: 16px;
+}
+
+@media (min-width: 540px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr); /* More columns for smaller cards */
+  }
+}
+
+@media (min-width: 960px) {
+  .cards {
+    grid-template-columns: repeat(5, 1fr); /* Display more cards in larger screens */
+  }
+}
+
+.card {
+  position: relative;
+  padding-bottom: 100%; /* Makes the cards perfectly square */
+  overflow: hidden;
+  border-radius: 16px; /* Smaller radius for a clean look */
+}
+
+.card-background {
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  filter: brightness(.75) saturate(1.2) contrast(.85);
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.card-content {
+  position: absolute;
+  padding: 16px; /* Adjusted padding for smaller cards */
+  font-family: Arial, sans-serif;
+  color: white;
+  bottom: 0;
+}
+
+.card-content p {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 4px 0; /* Reduced spacing */
+  text-transform: uppercase;
+  font-size: 0.75rem; /* Smaller text */
+}
+
+.card-content h3 {
+  font-size: 1.2rem; /* Adjusted size for smaller cards */
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+.card:hover .card-background {
+  transform: scale(1.05);
+}
+
+.cards:hover > .card:not(:hover) > .card-background {
+  filter: brightness(0.5) saturate(0) contrast(1.2) blur(10px);
+}
+/*END Skill syle*/
