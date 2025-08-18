@@ -63,6 +63,15 @@
           <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
           <li><a href="https://wa.me/9810226678" class="nav-link scrollto" target="_blank" rel="noopener noreferrer"><i class="bx bxl-whatsapp"></i> <span>Let's Talk</span></a></li>
           <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+          <li><a class="nav-link scrollto" onclick="tellJoke()"><i class="bx bx-laugh"></i> <span>Dad Joke</span></a></li>
+
+          <!--Dad Joke Modal -->
+          <div id="jokeModal">
+            <div id="jokeModalContent">
+              <button id="closeBtn" onclick="closeModal()">✖</button>
+              <p id="jokeText"></p>
+            </div>
+          </div>
           <!-- <li><a href="#logout" class="nav-link scrollto"><i ></i> <span>Log Out</span></a></li> -->
         </ul>
       </nav><!-- .nav-menu -->
@@ -203,7 +212,7 @@
             </div>
 
             <div class="bg-white rounded-lg p-4 shadow-sm text-center hover:shadow-md transition">
-              <img src="https://static-00.iconduck.com/assets.00/django-icon-1606x2048-lwmw1z73.png" alt="Django" class="h-20 mx-auto object-contain mb-2">
+              <img src="https://cdn.iconscout.com/icon/free/png-256/free-django-3628732-3029957.png" alt="Django" class="h-20 mx-auto object-contain mb-2">
               <span class="text-sm font-medium block">Django</span>
             </div>
 
@@ -675,6 +684,44 @@
         }
       });
   </script>
+  <!--DAD Joke Script-->
+
+<script>
+  async function tellJoke() {
+    try {
+      const res = await fetch("https://icanhazdadjoke.com/", {
+        headers: { Accept: "application/json" }
+      });
+      if (!res.ok) throw new Error("Failed to fetch joke.");
+      const data = await res.json();
+      const joke = data.joke;
+
+      // Show modal with joke
+      const modal = document.getElementById("jokeModal");
+      document.getElementById("jokeText").innerText = joke;
+      modal.style.display = "flex";
+
+      // Speak joke
+      const utterance = new SpeechSynthesisUtterance(joke);
+      speechSynthesis.cancel(); // stop any previous speech
+
+      // Auto-close modal when speech ends
+      utterance.onend = () => {
+        modal.style.display = "none";
+      };
+
+      speechSynthesis.speak(utterance);
+
+    } catch(err) {
+      alert("Error: " + err.message);
+    }
+  }
+
+  function closeModal() {
+    document.getElementById("jokeModal").style.display = "none";
+    speechSynthesis.cancel(); // stop speech if manually closed
+  }
+</script>
 
 </body>
 
